@@ -1,7 +1,28 @@
-"""Waypoint's domain engine: the rules the web layer will present."""
+"""Waypoint's domain engine: the rules the web layer presents."""
 
 from .distance import Distance
 from .itinerary import Itinerary
-from .trails import DIFFICULTIES, Trail
+from .mixins import ElevationMixin, RatingMixin
+from .trails import (
+    DIFFICULTIES,
+    BackpackingRoute,
+    DayHike,
+    GuidedDayHike,
+    LoopTrail,
+    Trail,
+    TrailRun,
+)
 
-__all__ = ["Distance", "Itinerary", "Trail", "DIFFICULTIES"]
+__all__ = [
+    "Distance",
+    "Itinerary",
+    "ElevationMixin",
+    "RatingMixin",
+    "Trail",
+    "DayHike",
+    "BackpackingRoute",
+    "TrailRun",
+    "GuidedDayHike",
+    "LoopTrail",
+    "DIFFICULTIES",
+]
