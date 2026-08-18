@@ -1,0 +1,39 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report a trail - Waypoint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <main class="container">
+    <h1>Report a trail</h1>
+    <p class="muted">Found a washout, a closure, or a trail we are missing? Tell us.</p>
+
+    <form class="card" method="post" style="max-width:480px">
+      {% csrf_token %}
+      {% if error %}<p class="error">{{ error }}</p>{% endif %}
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" name="name" value="{{ submitted.name|default:'' }}" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" value="{{ submitted.email|default:'' }}">
+      </div>
+      <div class="field">
+        <label for="trail">Trail</label>
+        <input id="trail" name="trail" value="{{ submitted.trail|default:'' }}">
+      </div>
+      <div class="field">
+        <label for="note">Note</label>
+        <textarea id="note" name="note" rows="4" required>{{ submitted.note|default:'' }}</textarea>
+      </div>
+      <button class="btn" type="submit">Send report</button>
+    </form>
+  </main>
+</body>
+</html>
