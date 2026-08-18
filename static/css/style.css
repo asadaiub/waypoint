@@ -1,0 +1,133 @@
+/* Waypoint — design system
+   Tokens lifted from kirki.com (see values noted inline), mapped onto Waypoint.
+   Font: <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"> */
+
+/* ---- 1. Tokens ------------------------------------------------ */
+:root {
+  /* color — Kirki's palette */
+  --ink:      #0C0C0C;              /* their near-black */
+  --muted:    rgba(12,12,12,.6);    /* they tint the ink, not a separate gray */
+  --paper:    #FDFDFD;
+  --surface:  #F5F5F7;              /* cool page gray */
+  --line:     rgba(12,12,12,.10);
+
+  --brand:      #5641F3;            /* --platform-primary-color */
+  --brand-hover:#7867F5;
+  --brand-ring: #CCC6FB;            /* their focus ring color */
+  --tint-1:     #EBE8FE;            /* violet ramp, lightest → deepest */
+  --tint-2:     #DDD9FD;
+  --tint-3:     #BBB3FA;
+  --danger:     #DC5151;
+
+  /* type — Geist is their custom face; Inter is their fallback and is free */
+  --font: "Geist", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --t-sm: .875rem;   /* 14 */
+  --t-md: 1rem;      /* 16 */
+  --t-lg: 1.25rem;   /* 20 */
+  --t-xl: 2.5rem;    /* 40 — their h1 */
+
+  /* space — 8pt */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
+
+  /* shape — 8px is their dominant radius, 100px their pill */
+  --r-sm: 4px; --r-md: 8px; --r-lg: 16px; --r-pill: 100px;
+  --shadow: rgba(0,0,0,.07) 0 2px 7px 0;
+  --shadow-brand: 0 4px 6px 2px rgba(86,65,243,.2);
+  --ring: 0 0 0 4px var(--brand-ring);
+}
+
+/* ---- 2. Base -------------------------------------------------- */
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--surface); color: var(--ink);
+  font: var(--t-md)/1.6 var(--font); -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { margin: 0 0 var(--s3); line-height: 1.15; letter-spacing: -.03em; font-weight: 600; }
+h1 { font-size: var(--t-xl); }
+h2 { font-size: var(--t-lg); }
+p { margin: 0 0 var(--s4); }
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.muted { color: var(--muted); }
+.num { font-family: var(--mono); font-size: var(--t-sm); }  /* distances, elevation */
+.container { max-width: 1040px; margin: 0 auto; padding: var(--s6) var(--s4); }
+
+/* ---- 3. Components -------------------------------------------- */
+
+/* nav */
+.nav {
+  display: flex; align-items: center; gap: var(--s5);
+  padding: var(--s4); background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.nav__brand { font-weight: 700; letter-spacing: -.03em; color: var(--ink); }
+.nav a { color: var(--muted); font-size: var(--t-sm); }
+.nav a:hover { color: var(--ink); text-decoration: none; }
+
+/* button */
+.btn {
+  display: inline-block; padding: var(--s3) var(--s5);
+  border: 1px solid transparent; border-radius: var(--r-pill);
+  background: var(--brand); color: #fff;
+  font: 500 var(--t-sm)/1 var(--font); cursor: pointer;
+  transition: background .15s, box-shadow .15s;
+}
+.btn:hover { background: var(--brand-hover); box-shadow: var(--shadow-brand); text-decoration: none; }
+.btn:focus-visible { outline: none; box-shadow: var(--ring); }
+.btn--ghost { background: var(--paper); color: var(--ink); border-color: var(--line); }
+.btn--ghost:hover { background: var(--tint-1); box-shadow: none; }
+
+/* card + grid */
+.grid { display: grid; gap: var(--s4); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: var(--s5); box-shadow: var(--shadow);
+}
+
+/* badge — difficulty rides the violet ramp; CLOSED gets Kirki's red */
+.badge {
+  display: inline-block; padding: var(--s1) var(--s3); border-radius: var(--r-pill);
+  background: var(--tint-1); color: var(--brand);
+  font-size: .75rem; font-weight: 500;
+}
+.badge--moderate { background: var(--tint-2); }
+.badge--hard     { background: var(--tint-3); color: #2E1F8F; }
+.badge--closed   { background: #FDECEC; color: var(--danger); }
+
+/* table */
+.table { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
+.table th, .table td { padding: var(--s3) var(--s2); text-align: left; border-bottom: 1px solid var(--line); }
+.table th { color: var(--muted); font-weight: 500; }
+
+/* form */
+.field { margin-bottom: var(--s4); }
+.field label { display: block; margin-bottom: var(--s2); font-size: var(--t-sm); font-weight: 500; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: var(--s3); font: var(--t-md) var(--font); color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md);
+}
+.field input:focus, .field textarea:focus {
+  outline: none; border-color: var(--brand); box-shadow: var(--ring);
+}
+.error { color: var(--danger); font-size: var(--t-sm); }
+
+/* logo — mark + wordmark + student id */
+.logo { display: inline-flex; align-items: center; gap: var(--s3); color: var(--ink); }
+.logo:hover { text-decoration: none; }
+.logo__mark {
+  flex: none; width: 36px; height: 36px; display: grid; place-items: center;
+  background: var(--brand); color: #fff; border-radius: var(--r-md);
+}
+.logo:hover .logo__mark { background: var(--brand-hover); box-shadow: var(--shadow-brand); }
+.logo__mark svg { width: 20px; height: 20px; display: block; }
+.logo__text { display: flex; flex-direction: column; line-height: 1.15; }
+.logo__name { font-weight: 600; letter-spacing: -.03em; }
+.logo__id {
+  font-family: var(--mono); font-size: .6875rem; /* 11 */
+  color: var(--muted); letter-spacing: .08em;
+}
+/* larger lockup for the hero / README */
+.logo--lg { gap: var(--s4); }
+.logo--lg .logo__mark { width: 56px; height: 56px; border-radius: var(--r-lg); }
+.logo--lg .logo__mark svg { width: 30px; height: 30px; }
+.logo--lg .logo__name { font-size: var(--t-lg); }

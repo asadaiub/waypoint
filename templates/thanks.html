@@ -1,0 +1,21 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thank you - Waypoint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <main class="container">
+    <h1>Thank you, {{ reporter }}.</h1>
+    <p class="muted">
+      {% if trail %}Your report on {{ trail }} is logged.{% else %}Your report is logged.{% endif %}
+      We read every one.
+    </p>
+    <p><a class="btn" href="{% url 'report' %}">Report another</a></p>
+  </main>
+</body>
+</html>

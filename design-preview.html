@@ -1,0 +1,53 @@
+<!doctype html>
+<meta charset="utf-8"><title>Waypoint — Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+
+<nav class="nav">
+  <a class="logo" href="#">
+    <span class="logo__mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg></span>
+    <span class="logo__text"><span class="logo__name">Md Asaduzzaman</span><span class="logo__id">n01190565</span></span>
+  </a>
+  <a href="#">Catalog</a><a href="#">Search</a><a href="#">Report a trail</a>
+</nav>
+
+<div class="container">
+  <h1>Waypoint</h1>
+  <p class="muted">Find your next trail.</p>
+  <p class="muted">Every component in the system, on one page.</p>
+  <p><a class="btn" href="#">Browse catalog</a> <a class="btn btn--ghost" href="#">Report a trail</a></p>
+
+  <h2 style="margin-top:48px">Cards</h2>
+  <div class="grid">
+    <div class="card">
+      <h2>Bruce Peak Loop</h2>
+      <p class="num muted">12.4 km · 480 m gain</p>
+      <span class="badge badge--moderate">Moderate</span>
+    </div>
+    <div class="card">
+      <h2>Devil's Glen</h2>
+      <p class="num muted">8.1 km · 310 m gain</p>
+      <span class="badge badge--hard">Hard</span>
+    </div>
+    <div class="card">
+      <h2>Cedar Springs</h2>
+      <p class="num muted">5.0 km · 90 m gain</p>
+      <span class="badge badge--closed">Closed</span>
+    </div>
+  </div>
+
+  <h2 style="margin-top:48px">Table</h2>
+  <table class="table">
+    <tr><th>#</th><th>Trail</th><th>Distance</th><th>Status</th></tr>
+    <tr><td>1</td><td>Bruce Peak Loop</td><td>12.4 km</td><td><span class="badge badge--moderate">Moderate</span></td></tr>
+    <tr><td>2</td><td>Devil's Glen</td><td>8.1 km</td><td><span class="badge badge--hard">Hard</span></td></tr>
+  </table>
+
+  <h2 style="margin-top:48px">Form</h2>
+  <div class="card" style="max-width:440px">
+    <div class="field"><label>Your name</label><input placeholder="Md Asaduzzaman"></div>
+    <div class="field"><label>Trail</label><input placeholder="Bruce Peak Loop"></div>
+    <div class="field"><label>Note</label><textarea rows="3" placeholder="Washout near the bridge…"></textarea></div>
+    <button class="btn">Send report</button>
+  </div>
+</div>
