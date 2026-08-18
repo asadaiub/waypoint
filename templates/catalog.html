@@ -2,17 +2,30 @@
 {% block title %}Trail catalog - Waypoint{% endblock %}
 {% block content %}
   <h1>Trail catalog</h1>
-  <p class="muted">Every open trail, shortest first.</p>
+  {% if selected_park %}
+    <p class="muted">Showing trails in {{ selected_park.name }}. <a href="{% url 'trails:catalog' %}">Show all</a></p>
+  {% else %}
+    <p class="muted">Every open trail, shortest first.</p>
+  {% endif %}
+
+  {% if parks %}
+    <p>
+      {% for park in parks %}
+        <a class="btn btn--ghost" href="?park={{ park.id }}">{{ park.name }}</a>
+      {% endfor %}
+    </p>
+  {% endif %}
 
   <table class="table">
     <thead>
-      <tr><th>#</th><th>Trail</th><th>Distance</th><th>Ascent</th><th>Status</th></tr>
+      <tr><th>#</th><th>Trail</th><th>Park</th><th>Distance</th><th>Ascent</th><th>Status</th></tr>
     </thead>
     <tbody>
       {% for trail in trails %}
         <tr>
           <td class="num">{{ forloop.counter }}</td>
           <td><a href="{% url 'trails:detail' trail.id %}">{{ trail.name }}</a></td>
+          <td class="muted">{{ trail.park|default:"-" }}</td>
           <td class="num">{{ trail.distance_km|floatformat:1 }} km</td>
           <td class="num">{{ trail.elevation_gain }} m</td>
           <td>
@@ -26,7 +39,7 @@
           </td>
         </tr>
       {% empty %}
-        <tr><td colspan="5" class="muted">No trails yet. Add some in the admin.</td></tr>
+        <tr><td colspan="6" class="muted">No trails yet. Add some in the admin.</td></tr>
       {% endfor %}
     </tbody>
   </table>
