@@ -7,7 +7,14 @@ UNITS = ("km", "mi")
 
 
 class Distance:
-    """An immutable magnitude paired with a unit."""
+    """An immutable magnitude paired with a unit.
+
+    Mixed-unit arithmetic auto-converts to the *left* operand's unit rather
+    than raising. Rejecting mixed units would make the common case -- summing
+    a catalog whose rows arrived from different feeds -- impossible without
+    callers normalising first, and the left operand is the one the caller
+    already chose to work in.
+    """
 
     __slots__ = ("_magnitude", "_unit")
 
@@ -41,6 +48,40 @@ class Distance:
 
     def _as_km(self):
         return self._magnitude if self._unit == "km" else self._magnitude * KM_PER_MI
+
+    # -- operators (WP-202) ------------------------------------------
+    def __add__(self, other):
+        if not isinstance(other, Distance):
+            return NotImplemented
+        return Distance(
+            self._magnitude + other.convert(self._unit).magnitude, self._unit
+        )
+
+    def __sub__(self, other):
+        if not isinstance(other, Distance):
+            return NotImplemented
+        # A negative result is not a distance, so __init__ rejects it.
+        return Distance(
+            self._magnitude - other.convert(self._unit).magnitude, self._unit
+        )
+
+    def __eq__(self, other):
+        if not isinstance(other, Distance):
+            return NotImplemented
+        return math.isclose(self._as_km(), other._as_km(), rel_tol=1e-9, abs_tol=1e-12)
+
+    def __lt__(self, other):
+        if not isinstance(other, Distance):
+            return NotImplemented
+        return self._as_km() < other._as_km()
+
+    def __gt__(self, other):
+        if not isinstance(other, Distance):
+            return NotImplemented
+        return self._as_km() > other._as_km()
+
+    def __hash__(self):
+        return hash(round(self._as_km(), 9))
 
     def __str__(self):
         return f"{self._magnitude:.1f} {self._unit}"

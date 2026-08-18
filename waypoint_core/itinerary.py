@@ -20,11 +20,13 @@ class Itinerary:
         return self
 
     def total_distance(self, unit="km"):
-        # Summed by hand for now; Week 8 gives Distance real arithmetic.
-        total = 0.0
+        total = Distance(0, unit)
         for trail in self._trails:
-            total += trail.distance.convert(unit).magnitude
-        return Distance(total, unit)
+            total = total + trail.distance
+        return total
+
+    def total_time(self):
+        return round(sum(t.estimated_time() for t in self._trails), 2)
 
     def __len__(self):
         return len(self._trails)
