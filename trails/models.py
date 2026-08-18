@@ -5,12 +5,33 @@ from django.db import models
 from waypoint_core import DIFFICULTIES, DayHike, Distance
 
 
+class Park(models.Model):
+    """A protected area that trails belong to."""
+
+    name = models.CharField(max_length=120, unique=True)
+    region = models.CharField(max_length=120)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class Trail(models.Model):
     """Mirrors the domain Trail's fields, with the same allowed difficulties."""
 
     DIFFICULTY_CHOICES = [(value, value.title()) for value in DIFFICULTIES]
 
     name = models.CharField(max_length=120)
+    # on_delete=PROTECT: trails are the valuable records here, and a park being
+    # removed is far more likely to be a mistake or a merge than a signal that
+    # its trails should vanish. PROTECT forces that call to be made explicitly.
+    # null=True lets the Week 12 rows survive this migration without a data
+    # migration; the admin can then assign parks at leisure.
+    park = models.ForeignKey(
+        Park, on_delete=models.PROTECT, related_name="trails", null=True, blank=True
+    )
     distance_km = models.DecimalField(max_digits=5, decimal_places=1)
     elevation_gain = models.IntegerField(default=0, help_text="metres of ascent")
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES, default="easy")
