@@ -6,8 +6,17 @@
     <label for="q">Trail name</label>
     <input id="q" name="q" value="{{ query }}" placeholder="cedar">
   </form>
+
   {% if query %}
-    <p class="muted">You searched for "{{ query }}".</p>
+    <p class="muted">{{ results|length }} result{{ results|length|pluralize }} for "{{ query }}".</p>
+    <div class="grid">
+      {% for trail in results %}
+        <div class="card">
+          <h2><a href="{% url 'trails:detail' trail.id %}">{{ trail.name }}</a></h2>
+          <p class="num muted">{{ trail.distance_km|floatformat:1 }} km &middot; {{ trail.elevation_gain }} m gain</p>
+        </div>
+      {% endfor %}
+    </div>
   {% else %}
     <p class="muted">Type a name above to search the catalog.</p>
   {% endif %}

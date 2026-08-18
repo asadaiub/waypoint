@@ -2,11 +2,14 @@
 
 from django.shortcuts import render
 
+from trails.models import Trail
+
 SITE_OWNER = "Md Asaduzzaman"
 
 
 def home(request):
-    return render(request, "home.html", {"greeting": SITE_OWNER})
+    longest = Trail.objects.filter(is_open=True).order_by("-distance_km")[:3]
+    return render(request, "home.html", {"greeting": SITE_OWNER, "longest": longest})
 
 
 def report(request):
@@ -32,20 +35,7 @@ def report(request):
 def search(request):
     """Reads the query safely -- a bare /search/ must not error."""
     query = request.GET.get("q", "")
-    return render(request, "search.html", {"query": query})
-
-
-CATALOG = [
-    {"name": "Orchard Trail",     "distance_km": 3.2,  "elevation_gain": 45,   "difficulty": "easy",     "is_open": True},
-    {"name": "Cedar Springs",     "distance_km": 5.0,  "elevation_gain": 90,   "difficulty": "easy",     "is_open": True},
-    {"name": "Devil's Glen",      "distance_km": 8.1,  "elevation_gain": 310,  "difficulty": "expert",   "is_open": True},
-    {"name": "Mizzy Lake",        "distance_km": 10.8, "elevation_gain": 220,  "difficulty": "moderate", "is_open": True},
-    {"name": "Bruce Peak Loop",   "distance_km": 12.4, "elevation_gain": 480,  "difficulty": "moderate", "is_open": True},
-    {"name": "Highland Traverse", "distance_km": 41.0, "elevation_gain": 1250, "difficulty": "expert",   "is_open": True},
-    {"name": "Beaver Pond Spur",  "distance_km": 2.1,  "elevation_gain": 30,   "difficulty": "easy",     "is_open": False},
-]
-
-
-def catalog(request):
-    """Renders from a plain list for now; Week 12 swaps in the database."""
-    return render(request, "catalog.html", {"trails": CATALOG})
+    results = Trail.objects.none()
+    if query:
+        results = Trail.objects.filter(is_open=True, name__icontains=query)
+    return render(request, "search.html", {"query": query, "results": results})

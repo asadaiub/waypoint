@@ -4,7 +4,20 @@
   <h1>Waypoint</h1>
   <p class="muted">Trails, distances and trip plans - curated by {{ greeting }}.</p>
   <p>
-    <a class="btn" href="{% url 'catalog' %}">Browse the catalog</a>
+    <a class="btn" href="{% url 'trails:catalog' %}">Browse the catalog</a>
     <a class="btn btn--ghost" href="{% url 'report' %}">Report a trail</a>
   </p>
+
+  {% if longest %}
+    <h2 style="margin-top:var(--s7)">Longest open trails</h2>
+    <div class="grid">
+      {% for trail in longest %}
+        <div class="card">
+          <h2><a href="{% url 'trails:detail' trail.id %}">{{ forloop.counter }}. {{ trail.name }}</a></h2>
+          <p class="num muted">{{ trail.distance_km|floatformat:1 }} km &middot; {{ trail.elevation_gain }} m gain</p>
+          <span class="badge badge--moderate">{{ trail.difficulty|title }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 {% endblock %}

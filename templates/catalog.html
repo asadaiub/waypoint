@@ -2,7 +2,7 @@
 {% block title %}Trail catalog - Waypoint{% endblock %}
 {% block content %}
   <h1>Trail catalog</h1>
-  <p class="muted">Every trail we know about.</p>
+  <p class="muted">Every open trail, shortest first.</p>
 
   <table class="table">
     <thead>
@@ -12,7 +12,7 @@
       {% for trail in trails %}
         <tr>
           <td class="num">{{ forloop.counter }}</td>
-          <td>{{ trail.name }}</td>
+          <td><a href="{% url 'trails:detail' trail.id %}">{{ trail.name }}</a></td>
           <td class="num">{{ trail.distance_km|floatformat:1 }} km</td>
           <td class="num">{{ trail.elevation_gain }} m</td>
           <td>
@@ -26,7 +26,7 @@
           </td>
         </tr>
       {% empty %}
-        <tr><td colspan="5" class="muted">No trails yet.</td></tr>
+        <tr><td colspan="5" class="muted">No trails yet. Add some in the admin.</td></tr>
       {% endfor %}
     </tbody>
   </table>
