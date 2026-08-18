@@ -1,25 +1,14 @@
-{% load static %}<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Search - Waypoint</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-  <main class="container">
-    <h1>Search trails</h1>
-    <form method="get" class="field" style="max-width:480px">
-      <label for="q">Trail name</label>
-      <input id="q" name="q" value="{{ query }}" placeholder="cedar">
-    </form>
-    {% if query %}
-      <p class="muted">You searched for "{{ query }}".</p>
-    {% else %}
-      <p class="muted">Type a name above to search the catalog.</p>
-    {% endif %}
-  </main>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Search - Waypoint{% endblock %}
+{% block content %}
+  <h1>Search trails</h1>
+  <form method="get" class="field" style="max-width:480px">
+    <label for="q">Trail name</label>
+    <input id="q" name="q" value="{{ query }}" placeholder="cedar">
+  </form>
+  {% if query %}
+    <p class="muted">You searched for "{{ query }}".</p>
+  {% else %}
+    <p class="muted">Type a name above to search the catalog.</p>
+  {% endif %}
+{% endblock %}
